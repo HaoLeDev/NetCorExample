@@ -1,0 +1,365 @@
+﻿@model IEnumerable<EmployeeViewModel>
+@{
+    ViewData["Title"] = "Quản lý nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/Js-Business/Js_EmployeeManager.js"></script>
+<section class="content-header">
+    <div class="col-md-4">
+        <ol class="breadcrumb">
+            <li><a href="/Home"><i class="fa fa-home"></i> Trang chủ </a></li>
+            <li><a href="#"> /Quản lý nhân viên</a></li>
+        </ol>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-8 mb-4">
+            <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i> Thêm mới</button>
+            <button class="btn btn-success"><i class="fa fa-file-excel"></i> Xuất ra file Excel</button>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <form asp-action="Index" method="get">
+                <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+                    <div class="input-group">
+                        <input type="search" placeholder="Nhập để tìm kiếm..." aria-describedby="button-addon1" name="search" value="@ViewData["CurrentFilter"]" class="ctrlsearch form-control border-0 bg-light">
+                        <div class="input-group-append">
+                            <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Quản lý nhân viên
+                    </h4>
+                </div>
+                <div class="card-body row">
+                    <div class="col-sm-12">
+                        <table id="EmployeeTable" class="table table-bordered table-striped table-fullwidth" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th><a class="" asp-action="Index" asp-route-sortOrder="@ViewData["CodeParam"]"> Mã nhân viên <i class="fas fa-sort-alpha-up"></i></a></th>
+                                    <th><a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]">Họ tên nhân viên <i class="fas fa-sort-alpha-up"></i></a></th>
+                                    <th>Phòng ban</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Số chứng minh thư</th>
+                                    <th>Giới tính</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var stt = 1;
+
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@stt</td>
+                                            <td>@item.Em_Code</td>
+                                            <td>@item.FirstName</td>
+                                            <td>@item.De_Name</td>
+                                            <td id="vBirthDate">@item.strBirthDate</td>
+                                            <td>@item.IdentityCardNumber</td>
+                                            <td>@item.strSex</td>
+                                            <td>@item.Phone</td>
+                                            <td class="text-center" style="width:120px;">
+                                                <button class="btn btn-success btn-sm" onclick="js_NhanVien.GetbyId(@item.Id)" @*data-target='#myModal' data-toggle='modal'*@ id="btnUpdate" title="Chỉnh sửa"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm" onclick="js_NhanVien.Delete(@item.Id)" id="btnDelete" title="Xóa"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-info btn-sm" onclick="js_NhanVien.Detail(@item.Id)" id="btnDetail" title="Xem chi tiết"><i class="fa fa-eye"></i></button>
+                                            </td>
+                                        </tr>
+                                        stt++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <ul id="pagination-demo" class="pagination-lg pull-right"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal popup-->
+<div class="modal fade active" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="Employeesform">
+                <fieldset>
+                    <div class="modal-header">
+                        <h4 id="title">Thêm mới nhân viên</h4>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="txtId" />
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="EmCode">Mã nhân viên</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="EmCode" name="EmCode" placeholder="Nhập mã nhân viên" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="FirstName">Họ và tên đệm</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="Nhập họ và tên đệm nhân viên" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="LastName">Tên nhân viên</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Nhập tên nhân viên" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="De_Id">Phòng ban</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <select id="De_Id" class="form-control" style="width:50%">
+                                    <option hidden>--Chọn phòng ban--</option>
+                                    @{
+                                        foreach (var i in ViewBag.ListDepartment)
+                                        {
+                                            <option value="@i.Id">@i.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="BirthDate">Ngày sinh</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="form-group input-group pmd-textfield pmd-textfield-floating-label">
+                                    <input type="text" class="form-control" id="BirthDate">
+                                    <div class="input-group-append">
+                                        <span class="btn btn-primary" id="btnCalendar">
+                                            <i class="fas fa-calendar fa-lg"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="Phone">Số điện thoại</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="Phone" name="Phone" placeholder="Nhập số điện thoại" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="IdcardNumber">Số CMTND</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="IdCardNumber" name="IdCardNumber" placeholder="Nhập số chứng minh thư" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="Sex">Giới tính</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <select class="form-group form-control" id="Sex" style="width:50%">
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
+                                </select>
+                            </div>
+                            @*<script>
+                                    $("#Sex").select2({
+                                        dropdownCssClass: 'no-search'
+                                    });
+                                </script>*@
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="Address">Địa chỉ</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <textarea cols="30" rows="3" class="form-control" id="Address" name="Address" placeholder="Nhập địa chỉ"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="Image">Upload ảnh</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="file" id="Image" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="Status">Trạng thái</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="checkbox" id="Status" name="Status" />
+                            </div>
+                        </div>
+                        <div class="row chucNang">
+                            <div class="col-lg-5"></div>
+                            <div class="col-lg-7">
+                                <div class="row">
+                                    <button class="btn btn-primary" id="btnSave">
+                                        <i class="fa fa-save"></i> Lưu
+                                    </button>
+                                    <button class="btn btn-danger" id="Close" data-dismiss="modal">
+                                        <i class="fa fa-times"></i> Hủy
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End modal popup-->
+<!--Popup detail-->
+<div class="modal active fade" id="modalDetail" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <fieldset>
+                    <div class="modal-header">
+                        <h4 class="card-title">Thông tin chi tiết nhân viên</h4>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtEmCode">Mã nhân viên</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtEmcode" class="no-border">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtName">Họ tên nhân viên</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtName" class="no-border">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtBirthDate">Ngày sinh</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtBirthDate" class="no-border">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtSex">Giới tính</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtSex" class="no-border">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtDeId">Phòng ban</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtDeId" class="no-border">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtIdCardNumber">Số CMTND</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtIdCardNumber" class="no-border">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtPhone">Số điện thoại</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtPhone" class="no-border">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtAddress">Địa chỉ</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input id="dtAddress" class="no-border">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="text-center col-sm-12" ><img id="dtImage" class="image-detail" /></label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End popup detail-->
+
+<script>
+    $("#Employeesform").validate({
+        rules: {
+            FirstName: {
+                required: true,
+                minlength: 1,
+                maxlength: 20
+            },
+            LastName: {
+                required: true,
+                minlength: 1,
+                maxlength: 15
+            },
+            EmCode: {
+                required: true,
+                minlength: 5,
+                maxlength: 15,
+            }
+        },
+        messages: {
+            FirstName: {
+                required: 'Họ và tên đệm không được để trống!',
+                minlength: 'Ít nhất phải có 1 ký tự!',
+                maxlength: 'Tối đa 20 ký tự!',
+            },
+            LastName: {
+                required: 'Tên không được để trống!',
+                minlength: 'Ít nhất phải có 1 ký tự!',
+                maxlength: 'Tối đa 15 ký tự!',
+            },
+            EmCode: {
+                required: 'Mã nhân viên không được để trống!',
+                minlength: 'Ít nhất phải có 5 ký tự!',
+                maxlength: 'Tối đa 15 ký tự!',
+            }
+        }
+    });
+    $("#BirthDate").datetimepicker({
+        format: 'DD/MM/YYYY'
+    })
+
+</script>

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @*<link href="~/lib/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet" />*@
+    <link href="~/css/admin_style.css" rel="stylesheet" />
+    <link href="~/lib/fontawesome-free-5.11.2-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/admin/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="~/lib/datatable/datatables.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/css/admin_style.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
+    @*<link href="~/css/jquery-confirm.min.css" rel="stylesheet" />*@
+    <script src="~/lib/jquery/dist/jquery-3.4.1.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/js/jquery.twbsPagination.js"></script>
+    <script src="~/js/moment-with-locales.js"></script>
+    <script src="~/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/lib/select2/select2.min.js"></script>
+    <script src="~/lib/bootstrap-4.0.0-dist/js/bootstrap.js"></script>
+    <script src="~/js/bootbox.all.js"></script>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <partial name="_Siderbar" />
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <partial name="_Header" />
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; HaoLv@astec.vn 2019</span>
+                        </div>
+                    </div>
+                </footer>
+            </div>  
+        </div>
+    </div>
+    <script src="~/admin/vendor/jquery/jquery.slim.min.js"></script>  
+    <script src="~/lib/datatable/datatables.min.js"></script>
+    <script src="~/admin/js/sb-admin-2.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

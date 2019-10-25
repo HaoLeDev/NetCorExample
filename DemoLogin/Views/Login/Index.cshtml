@@ -1,0 +1,131 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng nhập</title>
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+    @*<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">*@
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <link href="~/lib/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet" />
+    <link href="~/css/all.css" rel="stylesheet" />
+    <link href="~/css/Login.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+</head>
+<body class="login-bg">
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Đăng nhập hệ thống</h5>
+                        <form class="form-signin">
+                            <div class="form-label-group">
+
+                                <input type="text" id="UserName" class="form-control" placeholder="Tên đăng nhập" required autofocus>
+                                <label for="UserName"><i class="fa fa-user"></i> Tên đăng nhập</label>
+                            </div>
+                            <div class="form-label-group">
+                                <input type="password" id="Password" class="form-control" placeholder="Mật khẩu" required>
+                                <label for="Password"><i class="fa fa-lock"></i> Mật khẩu</label>
+                            </div>
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">Nhớ mật khẩu</label>
+                            </div>
+                            @*<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" onclick="Validate();" id="btnLogin">Đăng nhập</button>*@
+                            <input type="button" class="btn btn-lg btn-primary btn-block text-uppercase" id="btnLogin" value="Đăng nhập" onclick="Login()" />
+                            <hr class="my-4">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/js/bootstrap-notify.min.js"></script>
+    <script src="~/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script>
+        function Login() {
+            if ($('#UserName').val() == '') {
+                $.notify(
+                    {
+                        icon: 'glyphicon glyphicon-star',
+                        message: "Tên đăng nhập không được bỏ trống!"
+                    }, {
+                    type: 'danger'
+                });
+            }
+            else {
+                $.ajax(
+                {
+                    type: "POST",
+                    url: '@Url.Action("Validate", "Login")',
+                    data: {
+                        UserName: $('#UserName').val(),
+                        Password: $('#Password').val()
+                    },
+                    error: function (result) {
+                        $.notify(
+                                {
+                                    icon:'glyphicon glyphicon-star',
+	                                message: result.message
+                                },{
+	                                type: 'danger'
+                                });
+                    },
+                    success: function (result) {
+                        //console.log(result);
+                        if (result.status == true) {
+                            $.notify(
+                                {
+                                    icon:'glyphicon glyphicon-star',
+	                                message: result.message
+                                },{
+	                                type: 'success'
+                                });
+                            window.location.href = '@Url.Action("Index", "Home")';
+                        }
+                        else {
+                            $.notify(
+                                {
+                                    icon:'glyphicon glyphicon-star',
+	                                message: result.message
+                                },{
+	                                type: 'danger'
+                                });
+                        }
+                    }
+                });
+            }
+        }
+        var username = document.getElementById("UserName");
+        username.addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+           event.preventDefault();
+           document.getElementById("btnLogin").click();
+          }
+        });
+        var password = document.getElementById("Password");
+        password.addEventListener("keyup", function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                document.getElementById('btnLogin').click();
+            }
+        });
+    </script>
+</body>
+</html>

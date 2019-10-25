@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Popup detail-->
+<div class="modal active fade" id="modalDetail" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <fieldset>
+                    <div class="modal-header">
+                        <h4 class="card-title">Thông tin chi tiết nhân viên</h4>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtEmCode">Mã nhân viên</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtEmcode">@Model.Em_Code</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtName">Họ tên nhân viên</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtName">@Model.FirstName</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtBirthDate">Ngày sinh</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtBirthDate">@Model.FirstName</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtSex">Giới tính</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtSex">@Model.Sex</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtDeId">Phòng ban</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtDeId">@Model.De_Id</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtIdCardNumber">Số CMTND</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtIdCardNumber">@Model.IdentityCardNumber</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtPhone">Số điện thoại</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtPhone">@Model.Phone</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="dtAddress">Địa chỉ</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label id="dtAddress">@Model.Address</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="text-center col-sm-12" style="text-align:center">Ảnh</label>
+                                <img id="dtImage" style="width:100%;" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End popup detail-->

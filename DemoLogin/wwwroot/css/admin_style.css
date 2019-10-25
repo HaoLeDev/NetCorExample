@@ -1,0 +1,116 @@
+﻿
+.table >thead >tr >th{
+    text-align:center;
+}
+    .table > thead > tr > th a {
+        color: #858796 !important;
+        text-decoration: none;
+    }
+.table button {
+    background-color: none !important;
+    color: #324234;
+    border-bottom-color: none !important;
+    border: none;
+    background: none;
+}
+.table > tbody > tr > td .btn{
+    text-align: center;
+}
+.table > tbody > tr > td > a > i {
+        color: white;
+        width: 25px;
+}
+.btn{
+    margin-top:10px !important;
+}
+.table-fullwidth{
+    width:100%;
+}
+.card-title{
+    text-transform:uppercase;
+}
+.breadcrumb {
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    list-style: none !important;
+    background-color: #f5f5f5 !important;
+    border-radius: 4px;
+}
+.box-header {
+    border-bottom-color: #b9b9b9;
+    border-bottom: solid 1px;
+    background-color: #18a0dc;
+    color: white;
+    height: 80px;
+}
+
+    .box-header > h4 {
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: bold;
+        line-height: 45px;
+        margin-left: 15px;
+    }
+
+.modal-header {
+    /*background-color: #0b75cf;*/
+}
+
+    .modal-header > h4 {
+        /*color: white;*/
+    }
+
+.row {
+    margin-top: 10px;
+}
+
+.show-display {
+    display: block;
+}
+.row.chucNang .btn{
+    margin-left: 10px;
+}
+.modal-dialog{
+    max-width:800px;
+}
+
+/*.error {
+    transition: opacity ease 400ms;
+    cursor: pointer;
+    position: absolute;
+    background-color: #d10000;
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+    padding: 8px 12px;
+    z-index: -1;
+    opacity: 0;
+}
+.error::after {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #d10000 transparent transparent transparent;
+    margin-left: 8px;
+    margin-bottom: -5px;
+}*/
+.bootbox .modal-dialog{
+    max-width:500px;
+}
+.bootbox .modal-body{
+    background-color:rgba(85, 155, 254, 0.85);
+    color:white;
+}
+.no-border {
+    border: none;
+    pointer-events: none;
+}
+.image-detail{
+    height:400px;
+    text-align:center;
+}
